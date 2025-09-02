@@ -13,7 +13,7 @@ def test_basic():
 def test_login_success():
     response = client.post(
         "/users/login",
-        json={"id": "test1", "password": "1234"}
+        json={"email": "test1@example.com", "password": "1234"}
     )
 
     assert response.status_code == 200
@@ -22,7 +22,7 @@ def test_login_success():
 def test_login_fail():
     response = client.post(
         "/users/login",
-        json={"id": "test1", "password": "12345678"}
+        json={"email": "test1@example.com", "password": "12345678"}
     )
 
     assert response.status_code == 401

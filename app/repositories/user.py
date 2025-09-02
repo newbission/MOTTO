@@ -1,7 +1,10 @@
 import json
 from typing import List, Optional
-# FILE_PATH = "tests/crud/user.txt"
-User = dict
+from sqlmodel import SQLModel
+
+class User(SQLModel):
+    email: str
+    password: str
 
 class UserRepository:
     def __init__(self, file_path: str = "user.txt"):
@@ -9,12 +12,12 @@ class UserRepository:
     
     def load_users(self) -> List[User]:
         with open(self.file_path, "r") as f:
-            return json.load(f)
+            data = json.load(f)
+            return [User(**user_data) for user_data in data]
         
-    def get_user_by_id(self, user_id: str) -> Optional[User]:
+    def get_user_by_email(self, email: str) -> Optional[User]:
             users = self.load_users()
             for user in users:
-                if user.get("id") == user_id:
+                if user.get("email") == email:
                     return user
             return None
-
