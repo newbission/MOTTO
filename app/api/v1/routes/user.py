@@ -7,14 +7,19 @@ router = APIRouter(
 )
 
 class UserLogin(BaseModel):
-    id: str
+    email: str
     password: str
 
 @router.post("/login")
 def login(user_data: UserLogin):
     
     user = login_test.user_login(user_data.email, user_data.password)
+
     if not user:
-        raise HTTPException(status_code=401, detail="Fail..")
+        raise HTTPException(status_code=401, detail="Invalid email or password")
     
-    return {"message": "Success!!"}
+    print(user)
+    return {
+        "message": "Success!!",
+        "access_token": user["access_token"],
+    }

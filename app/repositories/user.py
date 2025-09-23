@@ -1,6 +1,6 @@
 import json
 from typing import List, Optional
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel 
 
 class User(SQLModel):
     email: str
@@ -18,6 +18,6 @@ class UserRepository:
     def get_user_by_email(self, email: str) -> Optional[User]:
             users = self.load_users()
             for user in users:
-                if user.get("email") == email:
+                if user.email == email:
                     return user
             return None
